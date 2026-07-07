@@ -1,3 +1,5 @@
+#/home/rafael/Dev/nexra_one/frappe_docker/apps/nexra_barcode/nexra_barcode/hooks.py
+
 app_name = "nexra_barcode"
 app_title = "Nexra Barcode"
 app_publisher = "Rafael Hartono"
@@ -26,7 +28,8 @@ app_license = "mit"
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/nexra_barcode/css/nexra_barcode.css"
-# app_include_js = "/assets/nexra_barcode/js/nexra_barcode.js"
+app_include_js = "/assets/nexra_barcode/js/nexra_barcode.js"
+#app_include_js = "/assets/nexra_barcode/js/nexra_scanner.js"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/nexra_barcode/css/nexra_barcode.css"

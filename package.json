@@ -1,0 +1,24 @@
+{
+  "name": "nexra_barcode",
+  "version": "1.0.0",
+  "description": "A high-performance WebAssembly-based barcode scanner and generator plugin for Frappe Framework v16, powered by ZXing-Wasm. Supports PDF417, EAN-13, Code 128, and QR Code natively.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "update-wasm": "mkdir -p nexra_barcode/public/js/lib && cp node_modules/zxing-wasm/dist/full/zxing_full.wasm nexra_barcode/public/js/lib/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rafaelhartono8/nexra_barcode.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+  "url": "https://github.com/rafaelhartono8/nexra_barcode/issues"
+  },
+  "homepage": "https://github.com/rafaelhartono8/nexra_barcode#readme",
+  "dependencies": {
+    "zxing-wasm": "^3.1.0"
+  }
+}
