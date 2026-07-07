@@ -29,6 +29,19 @@ app_license = "mit"
 # include js, css files in header of desk.html
 # app_include_css = "/assets/nexra_barcode/css/nexra_barcode.css"
 app_include_js = "/assets/nexra_barcode/js/nexra_barcode.js"
+
+fixtures = [
+    {
+        "dt": "Custom Field",
+        "filters": [["dt", "in", ["Item", "POS Invoice", "Stock Entry"]]]
+    },
+    {
+        "dt": "DocType",
+        "filters": [["name", "in", ["Nexra Barcode Setting", "Nexra Barcode Mapping"]]]
+    }
+]
+
+
 #app_include_js = "/assets/nexra_barcode/js/nexra_scanner.js"
 
 # include js, css files in header of web template

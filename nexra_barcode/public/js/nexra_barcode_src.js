@@ -70,3 +70,52 @@ window.nexraBarcode = {
         }
     }
 };
+
+// Listener Global Otomatis untuk Semua Form di ERPNext
+$(document).on('app_ready', function() {
+    frappe.ui.form.on('*', {
+        refresh: function(frm) {
+            // 1. Ambil data dari halaman pengaturan Nexra Barcode Setting (Frappe mengizinkan caching global)
+            frappe.db.get_doc('Nexra Barcode Setting')
+                .then(setting => {
+                    if (!setting || !setting.enabled || !setting.mappings) return;
+
+                    // 2. Cari apakah DocType yang sedang dibuka saat ini ada di dalam daftar tabel mapping
+                    const aturanForm = setting.mappings.find(m => m.document_type === frm.doctype);
+
+                    if (aturanForm) {
+                        eksekusiFiturBarcode(frm, aturanForm);
+                    }
+                })
+                .catch(err => {
+                    // Berjalan senyap jika dokumen pengaturan belum dibuat
+                    console.log("Nexra Barcode Setting belum dikonfigurasi.");
+                });
+        }
+    });
+});
+
+// Fungsi Eksekutor Dinamis berdasarkan baris pengaturan UI
+function eksekusiFiturBarcode(frm, aturan) {
+    // Skenario A: Jika diatur sebagai GENERATOR PREVIEW BARCODE
+    if (aturan.use_case === 'Generate Preview') {
+        if (frm.doc.item_code && frm.fields_dict[aturan.target_field]) {
+            window.nexraBarcode.generateToSVG(frm.doc.item_code).then(svgHtml => {
+                if (svgHtml) {
+                    frm.get_field(aturan.target_field).$wrapper.html(svgHtml);
+                }
+            });
+        }
+    }
+
+    // Skenario B: Jika diatur sebagai KASIR / SCANNER INPUT KAMERA
+    if (aturan.use_case === 'Scan Input') {
+        // Cek agar tombol tidak duplikat saat form di-refresh berkali-kali
+        if (!frm.wrapper.find('.btn-scan-barcode-kustom').length) {
+            frm.add_custom_button(__('Tombol Scanner Kamera'), function() {
+                // Panggil fungsi modal kamera yang sudah kita buat sebelumnya
+                window.nexraBarcode.bukaModalKameraGlobal(frm, aturan.target_field);
+            }, __('Aksi Barcode')).addClass('btn-scan-barcode-kustom');
+        }
+    }
+};
