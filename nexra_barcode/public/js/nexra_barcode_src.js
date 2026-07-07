@@ -1,0 +1,72 @@
+// /home/rafael/Dev/nexra_one/frappe_docker/apps/nexra_barcode/nexra_barcode/public/js/nexra_barcode.js
+import { 
+    prepareZXingModule, 
+    readBarcodes, 
+    writeBarcode } 
+    from 'zxing-wasm/full';
+
+
+prepareZXingModule({
+    overrides: {
+        locateFile: (path, prefix) => {
+            if (path.endsWith(".wasm")) {
+                return `/assets/nexra_barcode/js/lib/${path}`;
+            }
+            return prefix + path;
+        }
+    }
+});
+
+window.nexraBarcode = {
+    /**
+     * 1. SCANNER
+     * Dioptimalkan untuk memindai kode di lingkungan gudang yang menantang.
+     */
+    scanFromImage: async function(imageElement, customOptions = {}) {
+        const defaultReaderOptions = {
+            tryHarder: true,          
+            maxNumberOfSymbols: 1,   
+            formats: ['PDF_417', 'EAN_13', 'Code_128', 'QRCode', 'DataMatrix', 'ITF']
+        };
+
+
+        const finalOptions = { ...defaultReaderOptions, ...customOptions };
+
+        try {
+            const results = await readBarcodes(imageElement, finalOptions);
+            return results;
+        } catch (error) {
+            console.error("Gagal membaca barcode:", error);
+            return [];
+        }
+    },
+
+    /**
+     * 2. GENERATOR
+     * Fleksibel untuk mencetak label rak gudang hingga keperluan enkripsi QRIS.
+     */
+    generateToSVG: async function(textToEncode, customOptions = {}) {
+        const defaultWriterOptions = {
+            format: 'Code_128',       
+            scale: 3,                 
+            addHRT: true,             
+            addQuietZones: true,      
+            invert: false             
+        };
+
+
+        if (typeof customOptions === 'string') {
+            customOptions = { format: customOptions };
+        }
+
+        const finalOptions = { ...defaultWriterOptions, ...customOptions };
+
+        try {
+            const output = await writeBarcode(textToEncode, finalOptions);
+            return output.svg; 
+        } catch (error) {
+            console.error("Gagal membuat barcode:", error);
+            return null;
+        }
+    }
+};
