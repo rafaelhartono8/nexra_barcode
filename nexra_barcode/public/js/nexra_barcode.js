@@ -1,8 +1,21 @@
 // /home/rafael/Dev/nexra_one/frappe_docker/apps/nexra_barcode/nexra_barcode/public/js/nexra_barcode.js
-import { setWasmLocateUrl, readBarcodes, writeBarcode } from 'zxing-wasm/full';
+import { 
+    prepareZXingModule, 
+    readBarcodes, 
+    writeBarcode } 
+    from 'zxing-wasm/full';
 
 
-setWasmLocateUrl('/assets/nexra_barcode/js/lib/zxing_full.wasm');
+prepareZXingModule({
+    overrides: {
+        locateFile: (path, prefix) => {
+            if (path.endsWith(".wasm")) {
+                return `/assets/nexra_barcode/js/lib/${path}`;
+            }
+            return prefix + path;
+        }
+    }
+});
 
 window.nexraBarcode = {
     /**
