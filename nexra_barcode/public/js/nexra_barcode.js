@@ -24,8 +24,8 @@ window.nexraBarcode = {
      */
     scanFromImage: async function(imageElement, customOptions = {}) {
         const defaultReaderOptions = {
-            tryHarder: true,          // Menguras akurasi ekstra untuk membaca barcode yang buram/kotor
-            maxNumberOfSymbols: 1,    // Membatasi hanya 1 barcode per frame agar kasir checkout super cepat
+            tryHarder: true,          
+            maxNumberOfSymbols: 1,   
             formats: ['PDF_417', 'EAN_13', 'Code_128', 'QRCode', 'DataMatrix', 'ITF']
         };
 
