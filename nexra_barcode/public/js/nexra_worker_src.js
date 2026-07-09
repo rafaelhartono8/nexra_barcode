@@ -1,3 +1,4 @@
+// /home/rafael/Dev/nexra_one/frappe_docker/apps/nexra_barcode/nexra_barcode/public/js/nexra_worker_src.js
 // nexra_worker.js - Thread Latar Belakang (Math Engine Decoder)
 import { prepareZXingModule, readBarcodes } from 'zxing-wasm/reader';
 

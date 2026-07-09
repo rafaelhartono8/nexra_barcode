@@ -1,3 +1,4 @@
+// nexra_barcode/public/js/nexra_barcode_src.js
 // nexra_barcode_src.js - Thread Utama UI (Orchestrator & Camera Controller)
 import { writeBarcode } from 'zxing-wasm/writer';
 
