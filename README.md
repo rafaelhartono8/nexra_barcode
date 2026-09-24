@@ -1,3 +1,5 @@
+# Under Maintenance    
+
 ### Nexra Barcode
 
 A high-performance WebAssembly-based barcode scanner and generator plugin for Frappe Framework v16, powered by ZXing-Wasm. Supports PDF417, EAN-13, Code 128, and QR Code natively.
